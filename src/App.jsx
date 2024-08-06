@@ -8,21 +8,25 @@ import Register from "./Pages/Register"
 import Footer from "./components/Footer"
 import About from "./Pages/About"
 import Contact from "./Pages/Contact"
+import { useState } from "react"
 
 
 
 function App() {
+  
+  const [showLogin,setShowLogin]=useState(false)
 
   return (
     <>
+    {showLogin?<Login setShowLogin={setShowLogin}/>:<></>}
     <BrowserRouter>
-    <Navbar/>
+    <Navbar setShowLogin={setShowLogin}/>
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/contact" element={<Contact/>}/>
       <Route path="/products" element={<Products/>}/>
-      <Route path="/login" element={<Login/>}/>
+      {/* <Route path="/login" element={<Login/>}/> */}
       <Route path="/cart" element={<Cart/>}/>
       <Route path="/login/register" element={<Register/>}/>
 

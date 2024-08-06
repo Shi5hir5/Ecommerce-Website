@@ -2,15 +2,14 @@ import { useForm, Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
 import React from "react";
 import Render from "../components/Render";
-import { useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { RxCross1 } from "react-icons/rx";
 
-export default function Login() {
-  const navigate = useNavigate();
 
-  const handleSignUp = () => {
-    navigate("./Register");
-  };
+export default function Login({setShowLogin}) {
+  
+
+  const[currState,setCurrState]=useState("Login")
 
   const {
     handleSubmit,
@@ -65,14 +64,52 @@ export default function Login() {
 
   return (
     <>
-    <div className="">
-      <div className="bg-gradient-to-tr from-slate-200 to-gray-400  flex justify-center items-center w-full h-[688px]">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-1 h-screen">
+      <div className="  flex justify-center items-center w-full h-[688px]">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className=" w-[300px]  sm:w-[400px] sm:h-[full] bg-white  rounded-lg px-5 py-9 shadow-2xl bg-opacity-20 ">
+        <div className="float-end p-3  rounded-full cursor-pointer ">
+        <RxCross1 onClick={()=>setShowLogin(false)}/></div>
+          <div className=" w-[300px]  sm:w-[450px] sm:h-[full] bg-slate-300  rounded-lg px-5 py-9 shadow-2xl bg-opacity-80 ">
+            
             <div className="text-center text-[22px]  font-medium mb-6">
-              Enter your details.
+              {currState==="Login"? "Enter your details.":"Sign Up Here."}
             </div>
-
+            {currState==="Login"?<></>:<Controller
+              name="Username"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: {
+                  value: true,
+                  message: "*This field is required!",
+                },
+                minLength: {
+                  value: 3,
+                  message: "*Minium length is 3!",
+                },
+                maxLength: {
+                  value: 30,
+                  message: "*Maximum length is 30!",
+                },
+              }}
+              render={({ field }) => (
+                <div>
+                  <Render
+                    hName={"Username:"}
+                    inputName={"Username"}
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder={"Enter your username."}
+                    className={`${
+                      errors.Email ? "border-red-600" : "border-black"
+                    }`}
+                    eName={errors.Username ? "Username" : ""}
+                    message={errors.Username ? errors.Username.message : ""}
+                  />
+                </div>
+              )}
+            />}
+            
             <Controller
               name="Email"
               control={control}
@@ -139,7 +176,7 @@ export default function Login() {
                     }`}
                     placeholder="Enter your password."
                   />
-                  <div className="absolute  ml-[220px] sm:ml-[325px]">
+                  <div className="absolute  ml-[220px] sm:ml-[375px]">
                   {showPassword ? (
                     <FaRegEye onClick={handleShowPassword}  className="h-5 w-5 "/>
                   ) : (
@@ -154,8 +191,12 @@ export default function Login() {
                 </div>
               )}
             />
-            <div className="mt-2 p-1 flex justify-between">
-              <div>
+            {currState==="Login"?
+            <div className="mt-2 pt-3 pl-1 flex justify-between">
+              <h1 className="text-blue-700 text-center cursor-pointer hover:underline underline-offset-4 ">
+                Forgot Password?
+              </h1>
+            </div>:<div>
                 <input
                   type="checkbox"
                   checked={rememberMe}
@@ -165,28 +206,36 @@ export default function Login() {
                   }}
                   className="mx-1 mt-2"
                 />
-                <label>Remember me?</label>
-              </div>
-              <h1 className="text-blue-900 text-center cursor-pointer hover:underline ">
-                Forgot Password?
-              </h1>
-            </div>
+                <label className="ml-1">By continuing, i agree to the terms of use & privacy policy?</label>
+              </div>}
 
-            <button className="bg-blue-700  text-white w-full rounded-lg  cursor-pointer p-2 mt-6 hover:opacity-90 ">
-              Sign in
+            <button className="bg-blue-700  text-white w-full rounded-lg  cursor-pointer p-2 mt-6 hover:opacity-90 ">{currState==="Login"? "Sign in": "Create Account"}
+              
             </button>
+            {currState==="Login"?
             <div>
-              <p className=" text-center mt-6  text-lg">
+              <p className="  text-center mt-6  text-lg">
                 Don&apos;t have an account?
                 <span
                   className="p-2 text-black font-medium underline cursor-pointer hover:text-xl"
-                  onClick={handleSignUp}
+                  onClick={()=>setCurrState("Sign Up")}
                 >
-                  {" "}
                   Sign Up
                 </span>
               </p>
             </div>
+            :
+            <div>
+                <p className="  text-center mt-6 m text-lg">
+                  Already have an account?
+                  <span
+                    className="p-2 text-black font-medium underline cursor-pointer hover:text-xl"
+                    onClick={()=>setCurrState("Login")}
+                  >
+                    Sign in
+                  </span>
+                  </p>
+                </div>}
           </div>
         </form>
       </div>

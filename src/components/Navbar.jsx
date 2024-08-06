@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector  } from 'react-redux'
 
 
-const Navbar = () => {
+const Navbar = ({setShowLogin}) => {
 
   const cartCount = useSelector((state)=>state.cart.cartCount);
 
@@ -23,7 +23,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className='flex '>
-        <Link to="/login"><button className='bg-slate-100 px-5 py-1 rounded-3xl mx-5 hover:bg-pink-400 hover:text-white' >Login</button></Link>
+        <button className='bg-slate-100 px-5 py-1 rounded-3xl mx-5 hover:bg-pink-400 hover:text-white' onClick={()=>setShowLogin(true)}>Login</button>
         
         <Link to="/cart"  className='flex'><img src="src/assets/cart.png" alt="cart" className='w-10 h-8' /><sup ><span className='bg-red-500 text-white text-xs px-1 rounded-[100px] mt-2 '>{cartCount}</span></sup></Link>
       </div>
@@ -32,3 +32,7 @@ const Navbar = () => {
 }
 
 export default Navbar
+
+
+
+{/* <Link to="/login"></Link> */}
