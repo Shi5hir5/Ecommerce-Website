@@ -18,12 +18,12 @@ const Navbar = () => {
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
           <Link to="/products">Products</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/contact" >Contact</Link>
 
         </ul>
       </div>
       <div className='flex '>
-        <Link to="/login"><button className='bg-slate-100 px-5 py-1 rounded-3xl mx-5 hover:bg-pink-400 hover:text-white'>Login</button></Link>
+        <Link to="/login"><button className='bg-slate-100 px-5 py-1 rounded-3xl mx-5 hover:bg-pink-400 hover:text-white' >Login</button></Link>
         
         <Link to="/cart"  className='flex'><img src="src/assets/cart.png" alt="cart" className='w-10 h-8' /><sup ><span className='bg-red-500 text-white text-xs px-1 rounded-[100px] mt-2 '>{cartCount}</span></sup></Link>
       </div>
